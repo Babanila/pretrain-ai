@@ -3,6 +3,8 @@ import { Route, Switch } from "react-router-dom";
 import { cx, css } from "emotion";
 import PageHeader from "./PageHeader";
 import PretrainDataList from "./PretrainDataList";
+import IntentDetails from "./IntentDetails";
+import NewIntentDataForm from "./NewIntentDataForm";
 import ErrorComponent from "./ErrorComponent";
 
 const rootDiv = css`
@@ -18,6 +20,8 @@ function App() {
       <PageHeader />
       <Switch>
         <Route exact path="/" render={(props) => <PretrainDataList {...props} />} />
+        <Route path="/intent/:id" render={(props) => <IntentDetails {...props} />} />
+        <Route path="/new_intent" render={(props) => <NewIntentDataForm {...props} />} />
         <Route component={ErrorComponent} />
       </Switch>
     </div>
