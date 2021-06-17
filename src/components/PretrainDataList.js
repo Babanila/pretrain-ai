@@ -1,11 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { cx, css } from "emotion";
+import IntentContext from "./IntentContext";
 import SingleTrainData from "./SingleTrainData";
 import SingleButton from "./SingleButton";
 import ErrorComponent from "./ErrorComponent";
 import LoadingComponent from "./LoadingComponent";
-import { fetcher, localDatabaseUrl } from "./Utils";
 
 const PretrainListDiv = css`
   margin-top: 6em;
@@ -76,55 +76,53 @@ const addDataBtnStyle = css`
 `;
 
 function PretrainDataList() {
-  const [allTrainingData, setAllTrainingData] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState("");
-
-  React.useEffect(() => {
-    fetcher(localDatabaseUrl, setAllTrainingData, setError, setLoading);
-  }, [localDatabaseUrl]);
-
   const history = useHistory();
   const showTrainDataDetails = (id) => history.push(`/intent/${id}`);
   const handleNewTrainData = () => history.push(`/new_intent`);
 
-  if (error === "Network Error") return <ErrorComponent message="Please contact your provider." />;
-  if (loading) return <LoadingComponent />;
-
   return (
-    <div className={cx(PretrainListDiv)}>
-      <div className={cx(tableDiv)}>
-        <div className={cx(tableTitleDiv)}>
-          <div className={cx(titleWithBtnDiv)}>
-            <div>Customer List</div>
-            <SingleButton
-              btnName="Add New Data"
-              btnClick={handleNewTrainData}
-              btnStyles={addDataBtnStyle}
-            />
-          </div>
-        </div>
-        <div className={cx(tableHeaderDiv)}>ID</div>
-        <div className={cx(tableHeaderDiv)}>Name</div>
-        <div className={cx(tableHeaderDiv)}>Description</div>
-        <div className={cx(tableHeaderDiv)}>Expression Count</div>
-        <div className={cx(tableHeaderDiv)}>Reply Text</div>
-        {allTrainingData.length === 0 ? (
-          <div className={cx(tableNullBody)}> No Train Data in the Database</div>
-        ) : (
-          <div className={cx(tableBodyDiv)}>
-            {allTrainingData.map((item, i) => (
-              <SingleTrainData
-                key={i}
-                numId={i + 1}
-                trainData={item}
-                onClick={showTrainDataDetails}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+    <IntentContext.Consumer className={cx(PretrainListDiv)}>
+      {(value) => {
+        console.log("value", value);
+        if (value.allTrainingData === undefined) {
+          return <ErrorComponent message="Please contact your provider." />;
+        } else {
+          return (
+            <div className={cx(tableDiv)}>
+              <div className={cx(tableTitleDiv)}>
+                <div className={cx(titleWithBtnDiv)}>
+                  <div>Customer List</div>
+                  <SingleButton
+                    btnName="Add New Data"
+                    btnClick={handleNewTrainData}
+                    btnStyles={addDataBtnStyle}
+                  />
+                </div>
+              </div>
+              <div className={cx(tableHeaderDiv)}>ID</div>
+              <div className={cx(tableHeaderDiv)}>Name</div>
+              <div className={cx(tableHeaderDiv)}>Description</div>
+              <div className={cx(tableHeaderDiv)}>Expression Count</div>
+              <div className={cx(tableHeaderDiv)}>Reply Text</div>
+              {value.allTrainingData && value.allTrainingData.length === 0 ? (
+                <div className={cx(tableNullBody)}> No Train Data in the Database</div>
+              ) : (
+                <div className={cx(tableBodyDiv)}>
+                  {value.allTrainingData.map((trainData, i) => (
+                    <SingleTrainData
+                      key={i}
+                      numId={i + 1}
+                      trainData={trainData}
+                      onClick={showTrainDataDetails}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        }
+      }}
+    </IntentContext.Consumer>
   );
 }
 

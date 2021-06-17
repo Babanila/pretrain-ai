@@ -4,12 +4,12 @@ import { cx, css } from "emotion";
 function ErrorComponent({ message }) {
   const errorStyle = css`
     width: 100%;
-    height: 10em;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #f54b3a;
-    margin-top: 10em;
   `;
 
   return (
