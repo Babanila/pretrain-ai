@@ -6,7 +6,7 @@ import PageHeader from "./PageHeader";
 import PretrainDataList from "./PretrainDataList";
 import SingleIntentDetails from "./SingleIntentDetails";
 import ErrorComponent from "./ErrorComponent";
-import { defaultFetcher, localDatabaseUrl } from "./utils";
+import { defaultFetcher, localDatabaseUrl } from "./helpersUtils";
 
 const rootDiv = css`
   width: 100%;
