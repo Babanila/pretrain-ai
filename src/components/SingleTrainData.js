@@ -5,7 +5,7 @@ const tableRowDiv = css`
   display: table-row;
   background-color: #f6f6f6;
   &:hover {
-    background-color: #5fe0c6;
+    background-color: #f9bdb3;
   }
 `;
 

@@ -5,7 +5,6 @@ import { cx, css } from "emotion";
 import PageHeader from "./PageHeader";
 import PretrainDataList from "./PretrainDataList";
 import SingleIntentDetails from "./SingleIntentDetails";
-import NewIntentDataForm from "./NewIntentDataForm";
 import ErrorComponent from "./ErrorComponent";
 import { defaultFetcher, localDatabaseUrl } from "./utils";
 
@@ -35,7 +34,6 @@ function App() {
         <Switch>
           <Route exact path="/" render={(props) => <PretrainDataList {...props} />} />
           <Route path="/intent/:id" render={(props) => <SingleIntentDetails {...props} />} />
-          <Route path="/new_intent" render={(props) => <NewIntentDataForm {...props} />} />
           <Route component={ErrorComponent} />
         </Switch>
       </div>
