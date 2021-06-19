@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Check PageHeader Component should renders without crashing 1`] = `
+<div
+  className="css-mxp23c"
+>
+  <h1>
+    Pretrain AI Data
+  </h1>
+</div>
+`;
