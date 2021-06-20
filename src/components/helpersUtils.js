@@ -11,6 +11,7 @@ export const defaultFetcher = async (url, handleSetData, handleSetError, handleS
 
   try {
     const results = await axios(url);
+    window.localStorage.setItem("allTrainingData", JSON.stringify(results.data));
     return {
       handleSetData: handleSetData(results.data),
       handleSetLoading: handleSetLoading(false),

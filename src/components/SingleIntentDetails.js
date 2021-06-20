@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { cx, css } from "emotion";
-import IntentContext from "./IntentContext";
+import { IntentContext } from "./IntentContext";
 import ErrorComponent from "./ErrorComponent";
 import LoadingComponent from "./LoadingComponent";
 import SingleButton from "./SingleButton";
@@ -65,13 +65,7 @@ const backBtnStyle = css`
 
 function SingleIntentDetails({ match }) {
   const history = useHistory();
-  const [defaultSelectedIntent, setDefaultSelectedIntent] = React.useState(null);
   const handleBack = () => history.push(`/`);
-
-  React.useEffect(() => {
-    const intentData = JSON.parse(localStorage.getItem(`${match.params.id}`));
-    setDefaultSelectedIntent(intentData);
-  }, []);
 
   return (
     <IntentContext.Consumer>
@@ -79,19 +73,9 @@ function SingleIntentDetails({ match }) {
         if (value.error) return <ErrorComponent />;
         if (value.loading) return <LoadingComponent />;
 
-        let selectedIntent;
-        if (defaultSelectedIntent) {
-          selectedIntent = defaultSelectedIntent;
-        }
-
-        if (!selectedIntent) {
-          const result = value.allTrainingData.find(
-            (trainingData) => trainingData.id === match.params.id
-          );
-
-          selectedIntent = result;
-          localStorage.setItem(`${match.params.id}`, JSON.stringify(result));
-        }
+        const selectedIntent = value.allTrainingData.find(
+          (trainingData) => trainingData.id === match.params.id
+        );
 
         return (
           <div className={cx(intentDetailsDivStyle)}>

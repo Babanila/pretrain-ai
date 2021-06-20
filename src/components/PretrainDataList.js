@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { cx, css } from "emotion";
-import IntentContext from "./IntentContext";
+import { IntentContext } from "./IntentContext";
 import SingleTrainData from "./SingleTrainData";
 import ErrorComponent from "./ErrorComponent";
 import LoadingComponent from "./LoadingComponent";

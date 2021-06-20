@@ -1,12 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import IntentContext from "./IntentContext";
+import { IntentProvider } from "./IntentContext";
 import { cx, css } from "emotion";
 import PageHeader from "./PageHeader";
 import PretrainDataList from "./PretrainDataList";
 import SingleIntentDetails from "./SingleIntentDetails";
 import ErrorComponent from "./ErrorComponent";
-import { defaultFetcher, localDatabaseUrl } from "./helpersUtils";
 
 const rootDiv = css`
   width: 100%;
@@ -19,16 +18,8 @@ const rootDiv = css`
 `;
 
 function App() {
-  const [loading, setLoading] = React.useState(true);
-  const [allTrainingData, setAllTrainingData] = React.useState([]);
-  const [error, setError] = React.useState("");
-
-  React.useEffect(() => {
-    defaultFetcher(localDatabaseUrl, setAllTrainingData, setError, setLoading);
-  }, [localDatabaseUrl]);
-
   return (
-    <IntentContext.Provider value={{ loading, allTrainingData, error }}>
+    <IntentProvider>
       <div className={cx(rootDiv)}>
         <PageHeader />
         <Switch>
@@ -37,7 +28,7 @@ function App() {
           <Route component={ErrorComponent} />
         </Switch>
       </div>
-    </IntentContext.Provider>
+    </IntentProvider>
   );
 }
 
